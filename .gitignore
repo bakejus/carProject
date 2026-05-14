@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual env
+.venv/
+
+# PyCharm
+.idea/
+
+# Environment variables
+.env
+
+# Mac
+.DS_Store
+
+# Images / dataset
+images/
+dataset/
+
+# Debug files
+debug_*.png
+
+# Mongo local files
+*.db
