@@ -8,15 +8,15 @@ from scraper.lot_parser import parse_lot
 from scraper.image_downloader import download_images
 from db.mongo_client import CarsDB
 
+def load_lot_urls() -> list[str]:
 
-# -----------------------------------------------
-# Čia dedi lot URL sąrašą kurį nori scrapinti
-# -----------------------------------------------
-LOT_URLS = [
-    "https://www.copart.com/lot/48406446",
-]
-# -----------------------------------------------
+    with open("lot_urls2.txt", "r") as f:
 
+        return [
+            line.strip()
+            for line in f.readlines()
+            if line.strip()
+        ]
 
 async def scrape_lot(page, db: CarsDB, url: str):
     lot_number = url.rstrip("/").split("/")[-1]
@@ -46,7 +46,8 @@ async def main():
     browser, context = await create_browser()
 
     try:
-        for url in LOT_URLS:
+        lot_urls = load_lot_urls()
+        for url in lot_urls:
             page = await new_page(context)
             try:
                 await scrape_lot(page, db, url)
@@ -55,7 +56,6 @@ async def main():
             finally:
                 await page.close()
 
-            # Nedidelė pauzė tarp lotų (anti-bot)
             await asyncio.sleep(5)
     finally:
         await browser.close()

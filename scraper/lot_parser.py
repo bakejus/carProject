@@ -16,12 +16,6 @@ async def parse_lot(page: Page, lot_url: str) -> dict:
 
     lot_number = _extract_lot_number(lot_url)
 
-    # Debug screenshot
-    await page.screenshot(
-        path=f"debug_{lot_number}.png",
-        full_page=True
-    )
-
     # React content loading
     await page.wait_for_timeout(7000)
 
